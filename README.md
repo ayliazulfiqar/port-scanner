@@ -47,10 +47,10 @@ Build a simple scanner from scratch using Python's `socket` module, then improve
 
 | Tool | Open ports found |
 |---|---|
-| My Python scanner | [Add the actual port numbers] |
-| Nmap | [Add the actual port numbers] |
+| My Python scanner | 21, 22, 23, 25, 53, 80, 111, 139, 445, 512, 513, 514 |
+| Nmap | 21, 22, 23, 25, 53, 80, 111, 139, 445, 512, 513, 514] |
 
-**Result:** [State whether the results matched. If they differed, list the differences and possible explanations.]
+**Result:** The Python scanner and Nmap results matched. Both tools identified the same 12 open TCP ports: 21, 22, 23, 25, 53, 80, 111, 139, 445, 512, 513, and 514. No differences were observed in this scan.
 
 **Problems I hit:**
 - Learning how to create and use TCP sockets in Python.
@@ -65,6 +65,8 @@ I learned how to create TCP sockets, test connections with `connect_ex()`, and u
 
 
 ## Progress log
-- [Oct 27th'26]: Project planned. v1 starts next session.
+- [Oct 26th'26]: Project planned. v1 starts next session.
+- [Oct 27th'26]: v1 Done. v2 starts next session.
+ 
 
 Part of my [Cybersecurity Journal](../README.md).
