@@ -8,7 +8,7 @@ Build a simple scanner from scratch using Python's `socket` module, then improve
 ## Planned versions
 | Version | Features | Status |
 |---|---|---|
-| v1 | Basic TCP connect scan over a port range, printing open ports | Planned |
+| v1 | Basic TCP connect scan over a port range, printing open ports | Done |
 | v2 | Threading for speed, plus banner grabbing | Planned |
 | v3 | Command-line options (`argparse`), saved output, and a safety check | Planned |
 
@@ -26,6 +26,43 @@ Build a simple scanner from scratch using Python's `socket` module, then improve
 - `threading` or `concurrent.futures` (v2)
 - `argparse` for command-line options (v3)
 - `ipaddress` module for the safety check (v3)
+
+## v1 Results
+
+**What it does:** Scans TCP ports 1–1024 on my Metasploitable lab target using Python's `socket` module and `connect_ex()`. It prints the ports where TCP connections succeed.
+
+**How it works:** The script loops through each port, attempts a TCP connection, and checks the result. A return value of `0` means the TCP connection succeeded. The script uses a one-second timeout for each attempt.
+
+**Test environment:** Kali Linux and Metasploitable in my lab.
+
+**Test results:**
+
+| Test | Result |
+|---|---|
+| Individual test of port 80 | `0` — connection succeeded |
+| Individual test of port 9999 | `111` — connection refused |
+| Full scan of ports 1–1024 | Completed and displayed open ports |
+
+**Nmap comparison:** I compared my scanner with `nmap -sT -p 1-1024 <target-ip>`.
+
+| Tool | Open ports found |
+|---|---|
+| My Python scanner | [Add the actual port numbers] |
+| Nmap | [Add the actual port numbers] |
+
+**Result:** [State whether the results matched. If they differed, list the differences and possible explanations.]
+
+**Problems I hit:**
+- Learning how to create and use TCP sockets in Python.
+- Understanding the return value of `connect_ex()`.
+- Building a loop to test multiple ports automatically.
+
+**What I learned:**
+
+I learned how to create TCP sockets, test connections with `connect_ex()`, and use a `for` loop to scan multiple ports. I also learned that a successful connection returns `0`, while a failed connection does not necessarily prove that a port is closed.
+
+**Status:** v1 implemented and tested in my lab.
+
 
 ## Progress log
 - [Oct 27th'26]: Project planned. v1 starts next session.
