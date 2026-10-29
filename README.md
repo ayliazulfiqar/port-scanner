@@ -9,7 +9,7 @@ Build a simple scanner from scratch using Python's `socket` module, then improve
 | Version | Features | Status |
 |---|---|---|
 | v1 | Basic TCP connect scan over a port range, printing open ports | Done |
-| v2 | Threading for speed, plus banner grabbing | Planned |
+| v2 | Threading for speed, plus banner grabbing | Done |
 | v3 | Command-line options (`argparse`), saved output, and a safety check | Planned |
 
 ## Rules
@@ -63,7 +63,7 @@ I learned how to create TCP sockets, test connections with `connect_ex()`, and u
 
 **Status:** v1 implemented and tested in my lab.
 
-### V2 Results
+## v2 Results
 
 - **Target:** `192.168.56.102`
 - **Port range:** TCP 1–1024
