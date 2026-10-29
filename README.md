@@ -63,10 +63,29 @@ I learned how to create TCP sockets, test connections with `connect_ex()`, and u
 
 **Status:** v1 implemented and tested in my lab.
 
+### V2 Results
+
+- **Target:** `192.168.56.102`
+- **Port range:** TCP 1–1024
+
+| Measurement | v1 | v2 |
+|---|---|---|
+| Scan time | 0.74 seconds	 | 1.29 seconds |
+
+**Banner examples:**
+- **Port 21 (FTP):** `220 (vsFTPd 2.3.4)`
+- **Port 22 (SSH):** `SSH-2.0-OpenSSH_4.7p1 Debian-8ubuntu1`
+
+### What I Learned
+
+- Multithreading makes port scanning faster by checking multiple ports concurrently.
+- Banner grabbing helps identify services running on open ports.
+- Sorting results makes scan output easier to read.
+- Comparing results with Nmap helps validate accuracy.
 
 ## Progress log
 - [Oct 26th'26]: Project planned. v1 starts next session.
 - [Oct 27th'26]: v1 Done. v2 starts next session.
- 
-
+- [Oct 28th'26]: v2 Done. v3 starts next session.
+   
 Part of my [Cybersecurity Journal](../README.md).
