@@ -10,7 +10,7 @@ Build a simple scanner from scratch using Python's `socket` module, then improve
 |---|---|---|
 | v1 | Basic TCP connect scan over a port range, printing open ports | Done |
 | v2 | Threading for speed, plus banner grabbing | Done |
-| v3 | Command-line options (`argparse`), saved output, and a safety check | Planned |
+| v3 | Command-line options (`argparse`), saved output, and a safety check | Done |
 
 ## Rules
 - **I only scan machines I own, inside my isolated lab** (Metasploitable on the host-only network).
@@ -83,9 +83,69 @@ I learned how to create TCP sockets, test connections with `connect_ex()`, and u
 - Sorting results makes scan output easier to read.
 - Comparing results with Nmap helps validate accuracy.
 
+## v3 Results
+
+### Usage
+
+Display the available options:
+
+```bash
+python3 scanner.py --help
+```
+
+Scan ports 1–100 on your authorized lab machine:
+
+```bash
+python3 scanner.py 192.168.56.102 -p 1-100
+```
+
+Configure the timeout and worker threads:
+
+```bash
+python3 scanner.py 192.168.56.102 -p 1-100 -t 1 -w 20
+```
+
+Save results to a file:
+
+```bash
+python3 scanner.py 192.168.56.102 -p 1-100 -t 1 -w 20 -o results.txt
+```
+
+### Sample Output
+
+Example only; actual results depend on the target.
+
+```text
+Starting threaded port scan...
+Target: 192.168.56.102
+Port 22 open: No banner received
+Open ports found: 1
+Scan complete in 1.25 seconds
+Results saved to results.txt
+```
+
+## Safety
+
+- The scanner validates the target IPv4 address and permits private IPv4 ranges only.
+- This private-IP check is a basic safeguard, not proof of authorization.
+- Scan only systems you own or have explicit permission to test.
+- Use the scanner only in an authorized lab environment.
+
+## What I Learned
+
+- Using Python sockets to scan TCP ports.
+- Using `ThreadPoolExecutor` for concurrent scanning.
+- Grabbing service banners from open ports.
+- Handling command-line arguments with `argparse`.
+- Validating IPv4 addresses and port ranges.
+- Configuring timeouts and worker threads.
+- Saving scan results to a text file.
+- Handling invalid input and errors.
+
 ## Progress log
 - [Oct 26th'26]: Project planned. v1 starts next session.
 - [Oct 27th'26]: v1 Done. v2 starts next session.
 - [Oct 28th'26]: v2 Done. v3 starts next session.
+- [Oct 29th'26]: v3 Done.
    
 Part of my [Cybersecurity Journal](../README.md).
