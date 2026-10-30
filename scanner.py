@@ -1,9 +1,16 @@
 
 """
-Port Scanner v3
-A command-line TCP port scanner for authorized private lab targets.
-"""
+Python Port Scanner v3
 
+A multithreaded TCP port scanner with banner grabbing,
+command-line arguments, target validation, and file output.
+
+Usage:
+    python3 scanner.py TARGET -p START-END
+    python3 scanner.py --help
+
+Use only against systems you own or have permission to test.
+"""
 import argparse
 import ipaddress
 import socket
@@ -12,7 +19,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 def parse_ports(value):
-    """Validate a port range such as 1-1024."""
+    """Validate and parse the requested port range."""
     try:
         parts = value.split("-")
         if len(parts) != 2:
@@ -31,7 +38,7 @@ def parse_ports(value):
 
 
 def validate_target(value):
-    """Allow RFC1918 private IPs, excluding loopback."""
+    """Validate and parse the requested port range."""
     try:
         ip = ipaddress.ip_address(value)
     except ValueError:
@@ -108,7 +115,7 @@ def parse_arguments():
 
 
 def grab_banner(host, port, timeout):
-    """Try to read a banner from an open TCP service."""
+    """Attempt to retrieve a service banner."""
     try:
         with socket.create_connection(
             (host, port), timeout=timeout
@@ -130,7 +137,7 @@ def grab_banner(host, port, timeout):
 
 
 def scan_port(host, port, timeout):
-    """Check one TCP port and return its banner if open."""
+    """Check whether a TCP port is open."""
     try:
         with socket.socket(
             socket.AF_INET, socket.SOCK_STREAM
@@ -149,7 +156,7 @@ def scan_port(host, port, timeout):
 
 
 def save_results(filename, host, results, scanned, elapsed):
-    """Save open ports and scan summary to a text file."""
+    """Save scan results and summary to a file."""
     with open(filename, "w", encoding="utf-8") as file:
         file.write(f"Target: {host}\n")
         file.write("Open ports:\n")
@@ -193,11 +200,14 @@ def main():
     results.sort(key=lambda item: item[0])
     elapsed = time.perf_counter() - start_time
 
+    GREEN = "\033[92m"
+    RESET = "\033[0m"
+
     for port, banner in results:
         if banner:
-            print(f"Port {port} open: {banner!r}")
+            print(f"{GREEN}Port {port} open: {banner!r}{RESET}")
         else:
-            print(f"Port {port} open: No banner received")
+            print(f"{GREEN}Port {port} open: No banner received{RESET}")
 
     scanned = end_port - start_port + 1
 
@@ -206,6 +216,7 @@ def main():
     print("Open ports found:", len(results))
     print(f"Time taken: {elapsed:.2f} seconds")
 
+    
     if args.output:
         try:
             save_results(
@@ -221,3 +232,4 @@ def main():
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
